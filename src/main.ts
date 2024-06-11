@@ -9,7 +9,7 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.MQTT,
     options: {
-      url: 'mqtt://localhost:1883',
+      url: 'mqtt://mqtt:1883',
     },
   });
 
@@ -18,7 +18,7 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        brokers: ['localhost:9092'],
+        brokers: ['kafka:29092'],
       },
       consumer: {
         groupId: SENSORS_CONSUMER_GROUP_ID,

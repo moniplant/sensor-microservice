@@ -1,0 +1,62 @@
+version: 'latest'
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: mongo
+    env_file:
+      - .env
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    expose:
+      # Opens port 3306 on the container
+      - '${DB_PORT}'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - gateway-microservice_localnet
+  plants_app:
+    container_name: plants_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '5000:3000'
+    volumes:
+      - ./src:/usr/src/app/sensor/src
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - gateway-microservice_localnet
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DB_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DB_ROOT_PASSWORD}
+      - ME_CONFIG_MONGODB_PORT=${DB_PORT}
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_URL=mongodb://${DB_ROOT_USERNAME}:${DB_ROOT_PASSWORD}@mongo:${DB_PORT}/
+      - ME_CONFIG_BASICAUTH=false
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - gateway-microservice_localnet
+
+networks:
+  gateway-microservice_localnet:
+    external: true

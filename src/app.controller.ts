@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
 import {
   MessagePattern,
@@ -13,7 +13,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @MessagePattern(SAVE_SENSOR_DATA)
-  getNotifications(@Payload() data: number[], @Ctx() context: MqttContext) {
-    console.log(`Topic: ${context.getTopic()}`);
+  getNotifications(@Payload() data: string, @Ctx() context: MqttContext) {
+    Logger.log(`Topic: ${context.getTopic()}, data: ${JSON.stringify(data)}}`);
   }
 }
