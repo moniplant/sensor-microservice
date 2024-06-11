@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SensorDataModule } from './sensor-data/sensor-data.module';
 
 @Module({
   imports: [
@@ -18,8 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         )}@mongo:${configService.get<number>('DB_PORT')}`,
       }),
     }),
+    SensorDataModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
