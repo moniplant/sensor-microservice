@@ -1,9 +1,9 @@
 // SENSOR API - Kafka
-export const CREATE_SENSOR = 'sensor.create';
+// We listen to deletion of a sensor, and then delete all sensor data for that sensor
 export const DELETE_SENSOR = 'sensor.delete';
+// We listen to updates to a sensor, and then update all sensor data for that sensor in case the plant_id changes
 export const UPDATE_SENSOR = 'sensor.update';
-export const RETRIEVE_SENSOR = 'sensor.retrieve';
-export const LIST_PLANT_SENSORS = 'sensors.plant.list';
+// We listen to deletion of a plant, and then delete all sensor data for that plant
 export const DELETE_PLANT_SENSORS = 'sensors.plant.delete';
 
 // SENSOR DATA API - MQTT
