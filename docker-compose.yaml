@@ -1,4 +1,3 @@
-version: 'latest'
 services:
   mongodb:
     image: mongo:latest
