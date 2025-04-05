@@ -9,6 +9,9 @@ export class SensorData {
   sensor_id: string;
 
   @Prop()
+  plant_id: string;
+
+  @Prop()
   timestamp: string;
 
   @Prop()
