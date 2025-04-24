@@ -1,6 +1,5 @@
 services:
   # on the rpi, we totally ignore the monitoring app mongo-express, we dont need it there to debug since its our prod env
   mongodb:
-    build: #armv7 mongodb docker image
-      context: https://github.com/themattman/mongodb-raspberrypi-docker.git#:7.0.14
+    image: apcheamitru/arm32v7-mongo:latest
   mongo-express: !reset
