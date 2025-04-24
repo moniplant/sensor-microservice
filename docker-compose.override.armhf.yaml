@@ -2,4 +2,6 @@ services:
   # on the rpi, we totally ignore the monitoring app mongo-express, we dont need it there to debug since its our prod env
   mongodb:
     image: apcheamitru/arm32v7-mongo:latest
+    healthcheck:
+      test: "echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet --eval 'printjson(db.runCommand({serverStatus: 1}))' | grep 1"
   mongo-express: !reset
