@@ -4,4 +4,8 @@ services:
     image: apcheamitru/arm32v7-mongo:latest
     healthcheck:
       test: "echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet --eval 'printjson(db.runCommand({serverStatus: 1}))' | grep 1"
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
   mongo-express: !reset
