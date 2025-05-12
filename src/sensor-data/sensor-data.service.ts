@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SensorData } from './sensor-data.schema';
 import { Model } from 'mongoose';
@@ -23,9 +23,11 @@ export class SensorDataService {
     plantId: string,
     sensorId: string,
   ): Promise<SensorData | null> {
-    return this.sensorDataModel
+    const found = this.sensorDataModel
       .findOne({ plant_id: plantId, sensor_id: sensorId })
       .sort({ createdAt: -1 })
       .exec();
+    Logger.log('findLatestSensorData', found);
+    return found;
   }
 }
