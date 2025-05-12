@@ -1,15 +1,27 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { SensorDataService } from './sensor-data.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { SAVE_SENSOR_DATA } from 'src/events';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { GET_LATEST_SENSOR_DATA, SAVE_SENSOR_DATA } from 'src/events';
 import { SensorDataDto } from './sensor-data.dto';
 
 @Controller()
 export class SensorDataController {
   constructor(private readonly sensorDataService: SensorDataService) {}
 
-  @MessagePattern(SAVE_SENSOR_DATA)
+  @EventPattern(SAVE_SENSOR_DATA)
   getNotifications(@Payload() data: SensorDataDto) {
     this.sensorDataService.create(data);
+  }
+
+  @MessagePattern(GET_LATEST_SENSOR_DATA)
+  getLatestSensorData(@Payload() data: { plantId: string; sensorId: string }) {
+    Logger.log(
+      `Received request for latest sensor data for plantId: ${data.plantId}, sensorId: ${data.sensorId}`,
+      'SensorDataController',
+    );
+    return this.sensorDataService.findLatestSensorData(
+      data.plantId,
+      data.sensorId,
+    );
   }
 }

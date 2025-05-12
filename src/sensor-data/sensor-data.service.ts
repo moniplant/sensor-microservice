@@ -18,4 +18,14 @@ export class SensorDataService {
   async findAll(): Promise<SensorData[]> {
     return this.sensorDataModel.find().exec();
   }
+
+  async findLatestSensorData(
+    plantId: string,
+    sensorId: string,
+  ): Promise<SensorData | null> {
+    return this.sensorDataModel
+      .findOne({ plant_id: plantId, sensor_id: sensorId })
+      .sort({ createdAt: -1 })
+      .exec();
+  }
 }
