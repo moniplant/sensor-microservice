@@ -11,3 +11,6 @@ Made easy with docker compose, run: `docker compose up` for running all services
 - mongodb: That is the database choosen to store sensors data, listening under port: 27017 (.env defines DB_PORT)
 - mongo-express: Web-based MongoDB admin interface, written with Node.js and express (Accessible through: http://localhost:8081/)
 - sensors_app: Microservice core application, run on port: 5000
+
+#### Devlopment environment:
+`docker compose --profile dev up` to launch the services in dev mode (launches the microservice too)

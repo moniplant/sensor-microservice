@@ -1,4 +1,4 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { SensorDataService } from './sensor-data.service';
 import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { GET_LATEST_SENSOR_DATA, SAVE_SENSOR_DATA } from 'src/events';
@@ -14,11 +14,13 @@ export class SensorDataController {
   }
 
   @MessagePattern(GET_LATEST_SENSOR_DATA)
-  getLatestSensorData(@Payload() data: { plantId: string; sensorId: string }) {
-    Logger.log('getLatestSensorData', data);
-    return this.sensorDataService.findLatestSensorData(
+  async getLatestSensorData(
+    @Payload() data: { plantId: string; sensorId: string },
+  ) {
+    const response = await this.sensorDataService.findLatestSensorData(
       data.plantId,
       data.sensorId,
     );
+    return JSON.stringify(response);
   }
 }

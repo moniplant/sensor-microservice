@@ -1,6 +1,6 @@
 FROM node:latest
 
-WORKDIR /usr/src/app/sensor
+WORKDIR /usr/src/app/sensors
 
 COPY . .
 

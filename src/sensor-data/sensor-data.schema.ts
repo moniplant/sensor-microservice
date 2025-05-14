@@ -12,7 +12,7 @@ export class SensorData {
   plant_id: string;
 
   @Prop()
-  timestamp: string;
+  ts: string;
 
   @Prop()
   value: string;
