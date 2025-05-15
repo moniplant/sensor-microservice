@@ -25,7 +25,7 @@ export class SensorDataService {
   ): Promise<SensorData | null> {
     return this.sensorDataModel
       .findOne({ plant_id: plantId, sensor_id: sensorId })
-      .sort({ createdAt: -1 })
+      .sort({ ts: -1 })
       .exec();
   }
 }
