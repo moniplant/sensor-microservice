@@ -32,12 +32,12 @@ export class SensorDataService {
   findSensorDataBatch(
     plantId: string,
     sensorId: string,
-    numberOfDataPoints: number,
+    numberOfDataPoints: string,
   ): Promise<SensorData[]> {
     return this.sensorDataModel
       .find({ plant_id: plantId, sensor_id: sensorId })
       .sort({ ts: -1 })
-      .limit(numberOfDataPoints)
+      .limit(Number.parseInt(numberOfDataPoints))
       .exec();
   }
 }

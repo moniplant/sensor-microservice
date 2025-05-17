@@ -33,7 +33,7 @@ export class SensorDataController {
     data: {
       plantId: string;
       sensorId: string;
-      numberOfDataPoints: number;
+      numberOfDataPoints: string;
     },
   ) {
     const response = await this.sensorDataService.findSensorDataBatch(
