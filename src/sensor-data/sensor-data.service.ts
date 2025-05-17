@@ -28,4 +28,16 @@ export class SensorDataService {
       .sort({ ts: -1 })
       .exec();
   }
+
+  findSensorDataBatch(
+    plantId: string,
+    sensorId: string,
+    numberOfDataPoints: number,
+  ): Promise<SensorData[]> {
+    return this.sensorDataModel
+      .find({ plant_id: plantId, sensor_id: sensorId })
+      .sort({ ts: -1 })
+      .limit(numberOfDataPoints)
+      .exec();
+  }
 }

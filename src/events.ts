@@ -6,6 +6,7 @@ export const UPDATE_SENSOR = 'sensor.update';
 // We listen to deletion of a plant, and then delete all sensor data for that plant
 export const DELETE_PLANT_SENSORS = 'sensors.plant.delete';
 
-// SENSOR DATA API - MQTT
+// SENSOR DATA API - MQTT/Kafka
 export const SAVE_SENSOR_DATA = 'sensor.data.save';
 export const GET_LATEST_SENSOR_DATA = 'sensor.data.latest';
+export const GET_SENSOR_DATA_BATCH = 'sensor.data.batch';

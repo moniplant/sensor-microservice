@@ -20,5 +20,14 @@ jobs:
         ref: main
         clean: true
         fetch-depth: 0
+
+    - name: Stop and remove old container
+      run: |
+        docker rm -f sensors_app_prod || true
+
+    - name: Remove old image
+      run: |
+        docker rmi -f sensor-microservice-sensors_app_prod || true
+
     - name: Build the Docker image
       run: chmod +x service-runner.sh && ./service-runner.sh
